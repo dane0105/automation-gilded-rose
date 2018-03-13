@@ -16,7 +16,12 @@ class GoogleShopping
     find('span[title=Books]').click
     sleep(2)
   end
-
+  
+  def click_on_EatBig_category
+    find('span[title=EatBig]').click
+    sleep(2)
+  end
+  
   def verify_shopping(string)
     elements = all('div.pslline')
     case "string"
@@ -25,6 +30,11 @@ class GoogleShopping
         unless element.text =~ /Ocado/
           fail
         end
+    when 'EatBig'
+        elements.each do |element|
+          unless element.text =~ /EatBig/
+            fail
+          end    
       end
     end
   end
