@@ -48,30 +48,43 @@ Then(/^the results are for Ocado$/) do
   @page.verify_shopping('Ocado')
 end
 
+
 When(/^I click more$/) do
-  pending
+  find('span', :text => 'more').click
+  sleep(2)
 end
 
 And(/^I click on Eat big$/) do
-  pending
+  @page.click_on_EatBig_category
 end
 
 Then(/^the results are for Eat big$/) do
-  pending
+  @page.verify_shopping('EatBig')
 end
 
 When(/^I enter £20$/) do
-  pending
+  fill_in 'lower', with: 20
+  page.find('#gbqfb').click
+  sleep(2)
 end
 
-And(/^I enter £30$/) do
-  pending
+And(/^I enter £ (\d+)$/) do |arg|
+  fill_in 'upper', with: arg
+  page.find('#gbqfb').click
+  sleep(1)
 end
 
 And(/^I click go$/) do
-  pending
+  find('span', :text => 'go').click
+  sleep(10)
 end
 
-Then(/^the results are all between £20 and £30$/) do |arg|
-  pending
+Then(/^the results are all between £20 and £30$/) do
+  elements = all('span.price')
+  prices = elements.map { |e| e.text.sub('£', '').to_i }
+  prices.each do |price|
+    if price < 20 and price > 30
+      fail
+    end
+  end
 end
